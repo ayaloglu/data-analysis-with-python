@@ -20,31 +20,61 @@ with open(csvpath) as csvfile:
 
     csv_header = next(csvfile)
 
-    # print(f"CSV Header: {csv_header}")
-
-    # The number of total months equal to the length of the file without the header. Find the length of the file.
-
-    # print(len(list(budget)))
-
     # Calculate the sum of the profit/losses column since it is already written in positive and negative value
-    # print(list(budget))
 
-    totalnet = [float(row[1]) for row in (budget)]
+    # seperate csv columns into 2 lists
+
+    months = []
+    totalnet = []
+
+    for row in budget:
+
+        months.append(row[0])
+        totalnet.append(float(row[1]))
+
+    # Number of total months is equal to the lenght of the months list
+    print(f' Total Months: {len(months)}')
+
+    # calculate the total profit/loss
     totalfinal = sum(totalnet)
-    print(totalfinal)
+    print(f' Total: {totalfinal}')
 
-    totalnet_next = totalnet[1:]
-    average_sum = 0
-    for i, j in zip(totalnet, totalnet_next):
-        average_sum += j - i
-    print(round(average_sum/len(totalnet_next), 2))
-    # budgetlist = list(budget)
+    # max profit calculation
 
-    # dates = [k[0] for k in budgetlist]
-    # budgets = [float(k[1]) for k in budgetlist]
-    # total = sum(budgets)
-    # minimum = min(budgets)
-    # maximum = max(budgets)
-    # print("total: ", total)
-    # print("minimum: ", dates[budgets.index(minimum)], minimum)
-    # print("maximum: ", dates[budgets.index(maximum)], maximum)
+    max_profit = max(totalnet)
+    index_max = totalnet.index(max_profit)
+    max_profit_month = months[index_max]
+
+    print(f'Greatest increase in Profits: {max_profit_month} ,(${max_profit})')
+
+    # max loss calculation
+    max_loss = min(totalnet)
+    index_min = totalnet.index(max_loss)
+    max_loss_month = months[index_min]
+
+    print(f'Greatest Decrease in Profits: {max_loss_month} ,(${max_loss})')
+
+    total = 0
+
+    for i in range(1, len(totalnet)):
+
+        difference = totalnet[i]-totalnet[i-1]
+
+        total = total + difference
+
+    average = (total)/(len(totalnet)-1)
+
+    print(f'Average Change: $ {round(average,2)}')
+
+
+textpath = os.path.join('..', 'analysis', 'results.txt')
+
+with open(textpath, 'w', newline='') as textfile:
+
+    textfile.writelines(f' Total Months: {len(months)} \n')
+    textfile.writelines(f' Total: {totalfinal} \n')
+    textfile.writelines(
+        f'Greatest increase in Profits: {max_profit_month} ,(${max_profit}) \n')
+    textfile.writelines(
+        f'Greatest Decrease in Profits: {max_loss_month} ,(${max_loss}) \n')
+    textfile.writelines(f'Average Change: $ {round(average,2)} \n')
