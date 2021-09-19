@@ -42,9 +42,11 @@ with open(csvpath) as csvfile:
 
     # finding the total counts for each unique name
 
+    textpath = os.path.join('..', 'analysis', 'results.txt')
+
     results = {}
 
-    with open("results.txt", 'w', newline='') as textfile:
+    with open(textpath, 'w', newline='') as textfile:
 
         textfile.writelines(f'Total Votes: {total_vote_count} \n')
 
