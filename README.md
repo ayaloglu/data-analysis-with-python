@@ -27,7 +27,8 @@ The code also saves the results in results.txt file.
 
 This time the text file path was corrected.
 
-This time Average change was calculated over the entire period for the budget_data.csv file
+Average change was calculated over the entire period for the budget_data.csv file
+
 Text file with the results was created and saved in the Analysis folder. 
 
 
